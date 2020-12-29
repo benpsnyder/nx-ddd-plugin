@@ -20,15 +20,15 @@ import {
 
 export default function (options: DomainOptions): Rule {
   const appName = strings.dasherize(options.name);
-  const appDirectory = options.appsDirectory ? options.appsDirectory : '';
-  const appNameAndDirectory = appDirectory ? `${appDirectory}/${appName}` : `${appName}`;
+  const appNameAndDirectory = `${options.appsDirectory}/${appName}`;
+  const appNameAndDirectoryDasherized = strings.dasherize(appNameAndDirectory).split('/').join('-');
   const appFolderPath = `apps/${appNameAndDirectory}`;
   const appModuleFolder = `${appFolderPath}/src/app`;
   const appModuleFilepath = `${appModuleFolder}/app.module.ts`;
 
   const libName = strings.dasherize(options.name);
-  const libDirectory = options.libsDirectory ? options.libsDirectory : '';
-  const libNameAndDirectory  = libDirectory ? `${libName}/${libDirectory}` : `${libName}`;
+  const libNameAndDirectory  = `${libName}/${options.libsDirectory}`;
+  const libNameAndDirectoryDasherized = strings.dasherize(libNameAndDirectory).split('/').join('-');
   const libFolderPath = `libs/${libNameAndDirectory}`;
   const libLibFolder = `${libFolderPath}/domain/src/lib`;
 
@@ -53,20 +53,20 @@ export default function (options: DomainOptions): Rule {
       publishable: options.type === 'publishable',
       buildable: options.type === 'buildable',
     }),
-    addDomainToLintingRules(appName),
+    addDomainToLintingRules(libNameAndDirectoryDasherized),
     mergeWith(templateSource),
     !options.addApp
       ? noop()
       : externalSchematic('@nrwl/angular', 'app', {
           name: appName,
-          directory: appDirectory,
+          directory: options.appsDirectory,
           tags: `domain:${appName},type:app`,
           style: 'scss',
         }),
     options.addApp && options.ngrx
       ? chain([
           externalSchematic('@ngrx/schematics', 'store', {
-            project: appName,
+            project: appNameAndDirectoryDasherized,
             root: true,
             minimal: true,
             module: 'app.module.ts',
