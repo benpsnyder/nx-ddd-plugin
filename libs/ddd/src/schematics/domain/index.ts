@@ -31,6 +31,10 @@ export default function (options: DomainOptions): Rule {
   const appModuleFolder = `${appFolderPath}/src/app`;
   const appModuleFilepath = `${appModuleFolder}/app.module.ts`;
 
+  const subdirectory = options.subdirectory
+    ? options.subdirectory
+    : 'domain';
+
   const libName = strings.dasherize(options.name);
   const libNameAndDirectory = options.directory
     ? `${libName}/${options.directory}`
@@ -40,7 +44,7 @@ export default function (options: DomainOptions): Rule {
     .split('/')
     .join('-');
   const libFolderPath = `libs/${libNameAndDirectory}`;
-  const libLibFolder = `${libFolderPath}/domain/src/lib`;
+  const libLibFolder = `${libFolderPath}/${subdirectory}/src/lib`;
 
   const templateSource = apply(url('./files'), [
     template({}),
@@ -55,7 +59,7 @@ export default function (options: DomainOptions): Rule {
 
   return chain([
     externalSchematic('@nrwl/angular', 'lib', {
-      name: 'domain',
+      name: `${subdirectory}`,
       directory: libNameAndDirectory,
       tags: `domain:${libName},type:domain-logic`,
       style: 'scss',

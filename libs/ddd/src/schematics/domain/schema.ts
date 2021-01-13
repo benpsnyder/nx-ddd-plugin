@@ -7,13 +7,17 @@
 
 export interface DomainOptions {
   /**
-   * Domain name
+   * Grouping name for the Domain
    */
   name: string;
   /**
    * Subpath of the domain within libs directory
    */
   directory?: string;
+  /**
+   * Subpath of the directory
+   */
+  subdirectory?: string;
   /**
    * Add an app for the domain?
    */
