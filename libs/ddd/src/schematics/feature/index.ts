@@ -126,14 +126,18 @@ export default function (options: FeatureOptions): Rule {
       );
     }
 
-    let updatedEntityNameOptions = Object.assign({},options);
+    let updatedEntityNameOptions = Object.assign({}, options);
     updatedEntityNameOptions.entity = featureDirectoryAndNameDasherized;
 
     const domainTemplates =
       options.ngrx && entityName
         ? apply(url('./files/forDomainWithNgrx'), [
             filterTemplates(updatedEntityNameOptions),
-            template({ ...strings, ...updatedEntityNameOptions, workspaceName }),
+            template({
+              ...strings,
+              ...updatedEntityNameOptions,
+              workspaceName,
+            }),
             move(domainLibFolderPath),
           ])
         : apply(url('./files/forDomain'), [
@@ -193,7 +197,10 @@ export default function (options: FeatureOptions): Rule {
       options.ngrx && entityName && host.exists(domainModuleFilepath)
         ? chain([
             addNgRxToPackageJson(),
-            addNgrxImportsToDomain(domainModuleFilepath, featureDirectoryAndNameDasherized),
+            addNgrxImportsToDomain(
+              domainModuleFilepath,
+              featureDirectoryAndNameDasherized
+            ),
             addTsExport(domainIndexPath, [
               `./lib/+state/${featureDirectoryAndNameDasherized}/${featureDirectoryAndNameDasherized}.actions`,
             ]),
