@@ -2277,7 +2277,7 @@ __metadata:
     eslint-config-prettier: 8.1.0
     jest: 27.2.3
     json-schema-to-typescript: ^8.1.0
-    nx: 13.1.4
+    nx: 13.2.3
     prettier: 2.5.0
     ts-jest: 27.0.5
     ts-node: 9.1.1
@@ -6967,17 +6967,6 @@ __metadata:
   version: 2.2.0
   resolution: "nwsapi@npm:2.2.0"
   checksum: 5ef4a9bc0c1a5b7f2e014aa6a4b359a257503b796618ed1ef0eb852098f77e772305bb0e92856e4bbfa3e6c75da48c0113505c76f144555ff38867229c2400a7
-  languageName: node
-  linkType: hard
-
-"nx@npm:13.1.4":
-  version: 13.1.4
-  resolution: "nx@npm:13.1.4"
-  dependencies:
-    "@nrwl/cli": "*"
-  bin:
-    nx: bin/nx.js
-  checksum: 2494c95bf497b6916e56b94e32c57ec8f75f1215321b373e089a2e661027f07a2601952125c4a1ff055ba847f3ce8833b58027253741b337c167c22d7f150e3d
   languageName: node
   linkType: hard
 
